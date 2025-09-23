@@ -1,6 +1,5 @@
 import { Course } from "@/lib/types"
 import { fileSystemChapter } from "./file-system"
-import { testChapter } from "./test"
 
 export const linuxBasics : Course = {
     id: "linux-basics",
@@ -9,6 +8,5 @@ export const linuxBasics : Course = {
     icon: "🏠",
     chapters: [
         fileSystemChapter,
-        testChapter,
     ],
 }

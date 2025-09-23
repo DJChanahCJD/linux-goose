@@ -7,7 +7,7 @@ export const fileSystemQuestions: Question[] = [
     id: "q1",
     content: "Linux系统中，根目录用什么符号表示？",
     choices: ["~", "/", ".", ".."],
-    answers: [1, 2],
+    answers: [1],
     type: QuestionTypeEnum.CHOICE,
     hint: "根目录用 / 表示，是Linux文件系统的最顶层目录。",
   },

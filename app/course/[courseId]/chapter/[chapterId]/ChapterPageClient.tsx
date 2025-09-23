@@ -16,7 +16,7 @@ import {
 import { courses } from "@/public/courses";
 import { QuestionTypeEnum, ChoiceQuestion, FillQuestion } from "@/lib/types";
 import { Header } from "@/components/header";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 
 
 interface ChapterPageProps {
@@ -198,6 +198,7 @@ function ResultView({
 /** ---------------- 主页面 ---------------- */
 export default function ChapterPageClient({ params }: ChapterPageProps) {
   const { courseId, chapterId } = params;
+  const router = useRouter();
 
   const course = courses.find((b) => b.id === courseId);
   console.log(course?.chapters);
@@ -220,16 +221,16 @@ export default function ChapterPageClient({ params }: ChapterPageProps) {
   const totalQuestions = chapter.questions.length;
 
   const completedQuestions = useMemo(
-    () => selectedAnswers.filter((a) => a !== null).length,
-    [selectedAnswers]
+    () => showResults.filter((result) => result).length,
+    [showResults]
   );
 
   const correctAnswers = useMemo(
     () =>
       selectedAnswers.filter((ans, idx) =>
-        isAnswerCorrect(chapter.questions[idx], ans)
+        showResults[idx] && isAnswerCorrect(chapter.questions[idx], ans)
       ).length,
-    [selectedAnswers]
+    [selectedAnswers, showResults]
   );
 
   /** ---------------- 事件处理 ---------------- */
