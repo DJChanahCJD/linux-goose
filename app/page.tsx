@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { courses } from "@/public/courses"
+import { courses } from "@/lib/data"
 import Link from "next/link"
 import { Header } from "@/components/header"
 

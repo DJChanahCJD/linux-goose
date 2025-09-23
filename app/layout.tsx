@@ -8,9 +8,13 @@ import { ThemeProvider } from 'next-themes'
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Linux Learning Hub - 闯关式学习平台",
+  title: "Linux Goose - 闯关式学习平台",
   description: "通过有趣的闯关模式学习Linux知识",
-  generator: "v0.app",
+  icons: {
+    icon: "./favicon.ico",
+    shortcut: "./favicon.ico",
+    apple: "./favicon.ico",
+  },
 }
 
 export default function RootLayout({
@@ -20,7 +24,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
-      <link rel="icon" href="/favicon.ico" sizes="any" />
       <body className={`font-sans root ${GeistSans.variable} ${GeistMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Suspense fallback={null}>{children}</Suspense>

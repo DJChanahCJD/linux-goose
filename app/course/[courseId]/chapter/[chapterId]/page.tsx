@@ -1,4 +1,4 @@
-import { courses } from "@/public/courses";
+import { courses } from "@/lib/data";
 import ChapterPageClient from "./ChapterPageClient";
 
 export async function generateStaticParams() {

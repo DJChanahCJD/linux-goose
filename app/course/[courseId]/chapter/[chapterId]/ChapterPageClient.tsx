@@ -13,7 +13,7 @@ import {
   RotateCcw,
   BookOpen,
 } from "lucide-react";
-import { courses } from "@/public/courses";
+import { courses } from "@/lib/data";
 import { QuestionTypeEnum, ChoiceQuestion, FillQuestion } from "@/lib/types";
 import { Header } from "@/components/header";
 import { useRouter } from "next/navigation";

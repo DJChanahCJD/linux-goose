@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, ArrowRight, Clock, Target } from "lucide-react"
 import { getLevelColor, getLevelText } from "@/lib/utils"
-import { courses } from "@/public/courses"
+import { courses } from "@/lib/data"
 import { Header } from "@/components/header"
 
 interface CoursePageProps {
