@@ -5,20 +5,24 @@ import { notFound } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  ArrowLeft,
-  ArrowRight,
-  CheckCircle,
-  XCircle,
-  RotateCcw,
-  BookOpen,
-} from "lucide-react";
+import { RotateCcw, BookOpen, Github } from "lucide-react";
 import { courses } from "@/lib/data";
 import { QuestionTypeEnum, ChoiceQuestion, FillQuestion } from "@/lib/types";
 import { Header } from "@/components/header";
 import { useRouter } from "next/navigation";
-import { isAnswerCorrect } from "@/lib/utils";
-import { EmptyChapterState, QuestionContent, QuestionRenderer, SubmitButton, ResultDisplay, QuestionNavigation, CompletionStats } from "./components";
+import {
+  getGithubEditUrl,
+  isAnswerCorrect,
+} from "@/lib/utils";
+import {
+  EmptyChapterState,
+  QuestionContent,
+  QuestionRenderer,
+  SubmitButton,
+  ResultDisplay,
+  QuestionNavigation,
+  CompletionStats,
+} from "./components";
 
 interface ChapterPageProps {
   params: { courseId: string; chapterId: string };
@@ -147,13 +151,27 @@ export default function ChapterPageClient({ params }: ChapterPageProps) {
           {/* 左侧 Guide */}
           <div className="order-2 lg:order-1">
             <Card className="h-fit top-2">
-              <CardHeader>
+              <CardHeader className="inline-flex justify-between">
                 <CardTitle className="flex items-center gap-2">
                   <BookOpen />
                   Guide
                 </CardTitle>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    window.open(
+                      getGithubEditUrl(chapterId, courseId),
+                      "_blank",
+                      "noopener noreferrer"
+                    )
+                  }
+                  className="gap-2 bg-transparent hover:bg-accent/50"
+                >
+                  <Github className="w-4 h-4" />在 GitHub 编辑此页
+                </Button>
               </CardHeader>
-              <CardContent className="max-h-[80vh] overflow-y-auto">
+              <CardContent className="lg:max-h-[80vh] overflow-y-auto">
                 {typeof chapter.readme === "function"
                   ? chapter.readme({})
                   : chapter.readme}
@@ -168,7 +186,8 @@ export default function ChapterPageClient({ params }: ChapterPageProps) {
                 <CardTitle className="flex items-center justify-between h-8">
                   <div className="flex items-center gap-2 w-full">
                     题目 {currentQuestionIndex + 1}
-                    {currentQuestion && currentQuestion.type === QuestionTypeEnum.CHOICE &&
+                    {currentQuestion &&
+                      currentQuestion.type === QuestionTypeEnum.CHOICE &&
                       (currentQuestion as ChoiceQuestion).answers.length >
                         1 && <Badge variant="secondary">多选题</Badge>}
                   </div>
@@ -187,21 +206,36 @@ export default function ChapterPageClient({ params }: ChapterPageProps) {
 
                 {/* 导航 */}
                 <div className="flex flex-wrap gap-2 mt-2">
-                  {chapter.questions.map((_, idx) => (
-                    <Button
-                      key={idx}
-                      variant={
-                        currentQuestionIndex === idx ? "default" : "outline"
-                      }
-                      size="sm"
-                      onClick={() => setCurrentQuestionIndex(idx)}
-                      className={`h-8 w-8 p-0 rounded-full ${
-                        showResults[idx] ? "border-2 border-success" : ""
-                      }`}
-                    >
-                      {idx + 1}
-                    </Button>
-                  ))}
+                  {chapter.questions.map((_, idx) => {
+                    const isAnswered = showResults[idx];
+                    const isCorrect =
+                      isAnswered &&
+                      isAnswerCorrect(
+                        chapter.questions[idx],
+                        selectedAnswers[idx]
+                      );
+                    const isWrong = isAnswered && !isCorrect;
+
+                    return (
+                      <Button
+                        key={idx}
+                        variant={
+                          currentQuestionIndex === idx ? "default" : "outline"
+                        }
+                        size="sm"
+                        onClick={() => setCurrentQuestionIndex(idx)}
+                        className={`h-8 w-8 p-0 rounded-full ${
+                          isCorrect
+                            ? "border-2 border-success"
+                            : isWrong
+                            ? "border-2 border-destructive"
+                            : ""
+                        }`}
+                      >
+                        {idx + 1}
+                      </Button>
+                    );
+                  })}
                 </div>
               </CardHeader>
 

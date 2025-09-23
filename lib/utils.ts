@@ -57,3 +57,8 @@ export function isAnswerCorrect(
 
   return false;
 }
+
+const GITHUB_REPO = "https://github.com/DJChanahCJD/linux-goose/tree/main"
+export function getGithubEditUrl(chapterId: string, courseId: string) {
+  return `${GITHUB_REPO}/lib/data/${courseId}/${chapterId}/README.md`
+}
