@@ -12,6 +12,14 @@ interface CoursePageProps {
   params: Promise<{ courseId: string }>
 }
 
+// 生成静态参数函数，用于静态导出
+// 返回所有可能的课程ID，以便在构建时预生成页面
+export async function generateStaticParams() {
+  return courses.map((course) => ({
+    courseId: course.id,
+  }))
+}
+
 export default async function CoursePage({ params }: CoursePageProps) {
   const { courseId } = await params
   const course = courses.find((c) => c.id === courseId)
