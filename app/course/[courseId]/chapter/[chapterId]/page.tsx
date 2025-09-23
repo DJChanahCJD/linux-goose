@@ -1,5 +1,5 @@
 import { courses } from "@/lib/data";
-import ChapterPageClient from "./ChapterPageClient";
+import ChapterPageClient from "./page-client";
 
 export async function generateStaticParams() {
   const params = [];

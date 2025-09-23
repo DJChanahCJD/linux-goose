@@ -23,6 +23,7 @@ import {
   QuestionNavigation,
   CompletionStats,
 } from "./components";
+import { ChapterHeader } from "@/components/chapter-header";
 
 interface ChapterPageProps {
   params: { courseId: string; chapterId: string };
@@ -136,7 +137,7 @@ export default function ChapterPageClient({ params }: ChapterPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header
+      <ChapterHeader
         currentChapterId={chapter.id}
         course={course}
         onChapterSelect={(selectedChapterId) => {
