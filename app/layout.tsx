@@ -20,6 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
+      <link rel="icon" href="/favicon.ico" sizes="any" />
       <body className={`font-sans root ${GeistSans.variable} ${GeistMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Suspense fallback={null}>{children}</Suspense>

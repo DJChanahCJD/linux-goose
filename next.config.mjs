@@ -1,4 +1,5 @@
 import createMDX from '@next/mdx'
+import remarkGfm from 'remark-gfm'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -19,6 +20,11 @@ const nextConfig = {
 const withMDX = createMDX({
   // 配置以处理 .md 和 .mdx 文件
   extension: /\.(md|mdx)$/,
+  // 添加 markdown 插件
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [],
+  },
 })
 
 // 将 MDX 配置与 Next.js 配置合并

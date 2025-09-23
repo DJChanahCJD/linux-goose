@@ -2,9 +2,8 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { ArrowLeft, ArrowRight, Clock, Target } from "lucide-react"
-import { getChapterTime, getLevelColor, getLevelText } from "@/lib/utils"
+import { getLevelColor, getLevelText } from "@/lib/utils"
 import { courses } from "@/public/courses"
 import { Header } from "@/components/header"
 
@@ -75,9 +74,6 @@ export default async function CoursePage({ params }: CoursePageProps) {
                       <div className="flex items-center gap-1">
                         <Target className="h-4 w-4" />
                         {chapter.questions.length} 道题
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />约 {getChapterTime(chapter)} 分钟
                       </div>
                     </div>
                     <div className="text-sm text-primary font-medium inline-flex items-center">开始学习<ArrowRight /></div>

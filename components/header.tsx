@@ -85,7 +85,7 @@ function ChapterSelector({
       </DrawerTrigger>
       <DrawerContent className="w-full sm:max-w-md">
         <DrawerHeader>
-          <DrawerTitle>course.title</DrawerTitle>
+          <DrawerTitle>{course?.title}</DrawerTitle>
         </DrawerHeader>
         <div className="p-4 space-y-2">
           {course?.chapters.map((chapter) => (

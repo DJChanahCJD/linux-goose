@@ -2,7 +2,6 @@ import { Element, MDXProps } from "mdx/types";
 import { ReactNode } from 'react';
 
 export interface BaseQuestion {
-  id: string
   content: string
   type: QuestionTypeEnum
   hint?: string // 答案解析

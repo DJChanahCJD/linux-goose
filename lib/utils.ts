@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { Chapter, Level } from './types'
+import { Chapter, ChoiceQuestion, FillQuestion, Level, QuestionTypeEnum } from './types'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -32,15 +32,28 @@ export const getLevelText = (level: Level) => {
   }
 }
 
+export function isAnswerCorrect(
+  question: ChoiceQuestion | FillQuestion,
+  answer: number[] | string | null
+): boolean {
+  if (answer === null) return false;
 
-// 计算章节的学习时间（单位：分钟）
-// 难度倍数因子
-const LEVEL_TIME_FACTOR = {
-  [Level.EASY]: 1,
-  [Level.MEDIUM]: 2,
-  [Level.HARD]: 3,
-} as const
-export const getChapterTime = (chapter: Chapter) => {
-  const factor = LEVEL_TIME_FACTOR[chapter.level] ?? 1
-  return Math.ceil(chapter.questions.length) * factor
+  if (question.type === QuestionTypeEnum.CHOICE) {
+    const q = question as ChoiceQuestion;
+    return (
+      Array.isArray(answer) &&
+      JSON.stringify([...answer].sort()) ===
+        JSON.stringify([...q.answers].sort())
+    );
+  }
+
+  if (question.type === QuestionTypeEnum.FILL) {
+    const q = question as FillQuestion;
+    return (
+      typeof answer === "string" &&
+      answer.trim().toLowerCase() === q.answer.trim().toLowerCase()
+    );
+  }
+
+  return false;
 }
