@@ -1,6 +1,10 @@
 import { courses } from "@/lib/data";
 import ChapterPageClient from "./page-client";
 
+export interface ChapterPageProps {
+  params: { courseId: string; chapterId: string };
+}
+
 export async function generateStaticParams() {
   const params = [];
   
@@ -16,13 +20,6 @@ export async function generateStaticParams() {
   return params;
 }
 
-export default function ChapterPage({ params }: { params: { courseId: string; chapterId: string } }) {
-  const course = courses.find((b) => b.id === params.courseId);
-  const chapter = course?.chapters.find((qs) => qs.id === params.chapterId);
-
-  if (!course || !chapter) {
-    return <div>Course or chapter not found</div>;
-  }
-
+export default function ChapterPage({ params }: ChapterPageProps) {
   return <ChapterPageClient params={params} />;
 }

@@ -1,7 +1,7 @@
+import { Header } from "@/components/header"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { courses } from "@/lib/data"
 import Link from "next/link"
-import { Header } from "@/components/header"
 
 export default function HomePage() {
   return (

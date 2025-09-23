@@ -301,20 +301,18 @@ export const CompletionStats = ({
   correctAnswers,
   nextChapterId,
   courseId,
-  isLastChapter,
 }: {
   totalQuestions: number;
   correctAnswers: number;
   nextChapterId?: string;
   courseId: string;
-  isLastChapter: boolean;
 }) => (
   <div className="mt-6 p-4 bg-primary/10 border border-primary rounded-lg text-center">
     <h4 className="font-semibold text-lg mb-2 text-foreground">
       🎉 恭喜完成！
     </h4>
     <p className="text-sm text-muted-foreground mb-3">
-      您已完成本章节的所有题目
+      您已完成所有题目
     </p>
     <div className="flex justify-center gap-4 text-sm text-foreground">
       <span>总题数: {totalQuestions}</span>
@@ -333,13 +331,13 @@ export const CompletionStats = ({
           <ArrowRight className="h-4 w-4" />
         </Button>
       </Link>
-    ) : isLastChapter ? (
+    ) : (
       <Link href={`/course/${courseId}`} className="mt-4 inline-block">
         <Button className="gap-2">
           返回章节目录
           <ArrowLeft className="h-4 w-4" />
         </Button>
       </Link>
-    ) : null}
+    )}
   </div>
 );

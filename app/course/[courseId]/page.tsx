@@ -1,14 +1,21 @@
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, ArrowRight, Clock, Target } from "lucide-react"
-import { getLevelColor, getLevelText } from "@/lib/utils"
-import { courses } from "@/lib/data"
-import { Header } from "@/components/header"
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, ArrowRight, Clock, Target, Shuffle } from "lucide-react";
+import { getLevelColor, getLevelText, getRandomQuizUrl } from "@/lib/utils";
+import { courses } from "@/lib/data";
+import { Header } from "@/components/header";
 
 interface CoursePageProps {
-  params: Promise<{ courseId: string }>
+  params: Promise<{ courseId: string }>;
 }
 
 // 生成静态参数函数，用于静态导出
@@ -16,15 +23,15 @@ interface CoursePageProps {
 export async function generateStaticParams() {
   return courses.map((course) => ({
     courseId: course.id,
-  }))
+  }));
 }
 
 export default async function CoursePage({ params }: CoursePageProps) {
-  const { courseId } = await params
-  const course = courses.find((c) => c.id === courseId)
+  const { courseId } = await params;
+  const course = courses.find((c) => c.id === courseId);
 
   if (!course) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -32,27 +39,34 @@ export default async function CoursePage({ params }: CoursePageProps) {
       {/* 使用统一的Header组件 */}
       <Header />
 
-      {/* 课程信息头部 */}
-      <header className="bg-card">
-
-      </header>
-
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
-          <div className="container mx-auto px-4 py-6 mb-8">
-            <div className="flex items-center gap-3">
-              <div className="text-4xl">{course.icon}</div>
-              <div>
-                <h1 className="text-3xl font-bold text-balance">{course.title}</h1>
-                <p className="text-muted-foreground text-pretty">{course.desc}</p>
-              </div>
+        <div className="container mx-auto px-4 py-6 mb-8">
+          <div className="flex items-center gap-3">
+            <div className="text-4xl">{course.icon}</div>
+            <div>
+              <h1 className="text-3xl font-bold text-balance">
+                {course.title}
+              </h1>
+              <p className="text-muted-foreground text-pretty">{course.desc}</p>
             </div>
+          </div>
+          <div className="flex flex-wrap gap-4">
+            <Link href={getRandomQuizUrl(courseId)}>
+              <Button size="lg" className="gap-2">
+                <Shuffle className="h-5 w-5" />
+                测试一下
+              </Button>
+            </Link>
+          </div>
         </div>
-
 
         <div className="grid gap-6 md:grid-cols-2">
           {course.chapters.map((chapter, index) => (
-            <Link key={chapter.id} href={`/course/${courseId}/chapter/${chapter.id}`}>
+            <Link
+              key={chapter.id}
+              href={`/course/${courseId}/chapter/${chapter.id}`}
+            >
               <Card className="h-full transition-all hover:shadow-lg hover:scale-[1.02] cursor-pointer">
                 <CardHeader>
                   <div className="flex items-start justify-between mb-2">
@@ -66,7 +80,9 @@ export default async function CoursePage({ params }: CoursePageProps) {
                       {getLevelText(chapter.level)}
                     </Badge>
                   </div>
-                  <CardDescription className="text-pretty">{chapter.desc}</CardDescription>
+                  <CardDescription className="text-pretty">
+                    {chapter.desc}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-center justify-between">
@@ -76,7 +92,10 @@ export default async function CoursePage({ params }: CoursePageProps) {
                         {chapter.questions.length} 道题
                       </div>
                     </div>
-                    <div className="text-sm text-primary font-medium inline-flex items-center">开始学习<ArrowRight /></div>
+                    <div className="text-sm text-primary font-medium inline-flex items-center">
+                      开始学习
+                      <ArrowRight />
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -89,12 +108,17 @@ export default async function CoursePage({ params }: CoursePageProps) {
           <h3 className="text-lg font-semibold mb-4">学习进度</h3>
           <div className="grid gap-4 md:grid-cols-3">
             <div className="text-center">
-              <div className="text-2xl font-bold text-primary">{course.chapters.length}</div>
+              <div className="text-2xl font-bold text-primary">
+                {course.chapters.length}
+              </div>
               <div className="text-sm text-muted-foreground">章节数</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-success">
-                {course.chapters.reduce((acc, set) => acc + set.questions.length, 0)}
+                {course.chapters.reduce(
+                  (acc, set) => acc + set.questions.length,
+                  0
+                )}
               </div>
               <div className="text-sm text-muted-foreground">总题目数</div>
             </div>
@@ -106,5 +130,5 @@ export default async function CoursePage({ params }: CoursePageProps) {
         </div>
       </main>
     </div>
-  )
+  );
 }

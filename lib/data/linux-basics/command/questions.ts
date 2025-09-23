@@ -25,7 +25,7 @@ export const questions: Question[] = [
   {
     type: QuestionTypeEnum.CHOICE,
     content: "如何递归复制整个目录？",
-    choices: ["cp -r", "cp -a", "cp -R", "cp --recursive"],
+    choices: ["cp -r", "cp -a", "cp -all", "cp --recursive"],
     answers: [0],
     hint: "`cp -r` 或 `cp -R` 都可以用于递归复制目录及其内容。",
   },
