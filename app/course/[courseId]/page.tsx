@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, Clock, Target, Shuffle } from "lucide-react";
 import { getLevelColor, getLevelText, getRandomQuizUrl } from "@/lib/utils";
-import { courses } from "@/lib/data";
+import { courses } from "@/data";
 import { Header } from "@/components/header";
 
 interface CoursePageProps {

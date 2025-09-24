@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Header } from "@/components/header";
 import { QuizCard } from "@/components/QuizCard";
 
-import { courses } from "@/lib/data";
+import { courses } from "@/data";
 import { ChoiceQuestion, FillQuestion, Question } from "@/lib/types";
 import { getRandomQuestions, isAnswerCorrect } from "@/lib/utils";
 import { RandomQuizPageProps } from "./page";

@@ -38,3 +38,6 @@ Linux文件系统是一个层次化的目录结构，从根目录(/)开始。
 a = 121213131
 print(a)
 ```
+
+图片参考
+![file-system.png](https://djchan-xyz.pages.dev/file/AgACAgUAAyEGAASJIjr1AAICyGgfULsViYUzC3vqCL3LMQMUD4t3AAJHzTEbM30AAVUQwBZBLSpgTAEAAwIAA3cAAzYE.png)

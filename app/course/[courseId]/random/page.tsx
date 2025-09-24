@@ -1,4 +1,4 @@
-import { courses } from "@/lib/data";
+import { courses } from "@/data";
 import { RandomQuizClient } from "./page-client";
 
 export interface RandomQuizPageProps {

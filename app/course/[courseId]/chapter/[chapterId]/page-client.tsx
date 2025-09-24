@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Github } from "lucide-react";
-import { courses } from "@/lib/data";
+import { courses } from "@/data";
 import { useRouter } from "next/navigation";
 import { getGithubEditUrl, isAnswerCorrect } from "@/lib/utils";
 
