@@ -31,6 +31,7 @@ export function RandomQuizClient({ params }: RandomQuizPageProps) {
   const generateRandomQuestions = useCallback(() => {
     return getRandomQuestions(allQuestions);
   }, [allQuestions]);
+  const [randomQuestions, setRandomQuestions] = useState<Question[]>([]);
 
     const {
     currentQuestionIndex,
@@ -47,8 +48,7 @@ export function RandomQuizClient({ params }: RandomQuizPageProps) {
     handlePrevQuestion,
     handleNextQuestion,
     handleQuestionSelect,
-  } = useQuiz(allQuestions);
-  const [randomQuestions, setRandomQuestions] = useState<Question[]>([]);
+  } = useQuiz(randomQuestions);
 
 
   // 初始化题目
@@ -58,8 +58,9 @@ export function RandomQuizClient({ params }: RandomQuizPageProps) {
 
   // 换一批题目
   const handleNewRandomQuiz = () => {
-    setRandomQuestions(generateRandomQuestions());
-    // 重置其他状态
+    const newRandomQuestions = generateRandomQuestions();
+    setRandomQuestions(newRandomQuestions);
+    // 重置所有状态到初始值
     handleQuestionSelect(0);
     handleResetQuestion();
   };
