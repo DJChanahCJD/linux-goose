@@ -9,7 +9,7 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: "Linux Goose - 闯关式学习平台",
-  description: "通过有趣的闯关模式学习Linux知识",
+  description: "通过有趣的闯关模式学习计算机知识",
   icons: {
     icon: "./favicon.ico",
     shortcut: "./favicon.ico",
