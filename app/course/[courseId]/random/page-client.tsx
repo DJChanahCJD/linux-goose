@@ -12,6 +12,8 @@ import { courses } from "@/lib/data";
 import { ChoiceQuestion, FillQuestion, Question } from "@/lib/types";
 import { getRandomQuestions, isAnswerCorrect } from "@/lib/utils";
 import { RandomQuizPageProps } from "./page";
+import { EmptyQuizState } from "@/components/quiz-components";
+import { useQuiz } from "@/hooks/use-quiz";
 
 /** ---------------- 随机刷题页面 ---------------- */
 export function RandomQuizClient({ params }: RandomQuizPageProps) {
@@ -21,14 +23,33 @@ export function RandomQuizClient({ params }: RandomQuizPageProps) {
   if (!course) notFound();
 
   const allQuestions = useMemo(
-    () => course?.chapters.flatMap(ch => ch.questions) || [],
+    () => course?.chapters.flatMap((ch) => ch.questions) || [],
     [course]
   );
-  const [randomQuestions, setRandomQuestions] = useState<Question[]>([]);
+
   // 初始化或刷新题目
   const generateRandomQuestions = useCallback(() => {
     return getRandomQuestions(allQuestions);
   }, [allQuestions]);
+
+    const {
+    currentQuestionIndex,
+    currentQuestion,
+    totalQuestions,
+    selectedAnswers,
+    showResults,
+    completedQuestions,
+    correctAnswers,
+    handleChoiceSelect,
+    handleFillInput,
+    handleSubmitAnswer,
+    handleResetQuestion,
+    handlePrevQuestion,
+    handleNextQuestion,
+    handleQuestionSelect,
+  } = useQuiz(allQuestions);
+  const [randomQuestions, setRandomQuestions] = useState<Question[]>([]);
+
 
   // 初始化题目
   useEffect(() => {
@@ -39,125 +60,14 @@ export function RandomQuizClient({ params }: RandomQuizPageProps) {
   const handleNewRandomQuiz = () => {
     setRandomQuestions(generateRandomQuestions());
     // 重置其他状态
-    setCurrentQuestionIndex(0);
-    setSelectedAnswers(new Array(10).fill(null));
-    setShowResults(new Array(10).fill(false));
+    handleQuestionSelect(0);
+    handleResetQuestion();
   };
 
-  /** ---------------- 状态管理 ---------------- */
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<
-    (number[] | string | null)[]
-  >(new Array(randomQuestions.length).fill(null));
-  const [showResults, setShowResults] = useState<boolean[]>(
-    new Array(randomQuestions.length).fill(false)
-  );
 
-  const currentQuestion = randomQuestions[currentQuestionIndex];
-  const totalQuestions = randomQuestions.length;
-
-  const completedQuestions = useMemo(
-    () => showResults.filter(Boolean).length,
-    [showResults]
-  );
-
-  const correctAnswers = useMemo(
-    () =>
-      selectedAnswers.filter(
-        (ans, idx) =>
-          showResults[idx] && isAnswerCorrect(randomQuestions[idx], ans)
-      ).length,
-    [selectedAnswers, showResults, randomQuestions]
-  );
-
-  /** ---------------- 事件处理 ---------------- */
-  const handleChoiceSelect = (index: number) => {
-    if (showResults[currentQuestionIndex]) return;
-
-    setSelectedAnswers((prev) => {
-      const next = [...prev];
-      const q = currentQuestion as ChoiceQuestion;
-
-      if (q.answers.length === 1) {
-        // 单选
-        next[currentQuestionIndex] = [index];
-      } else {
-        // 多选
-        const current = (next[currentQuestionIndex] as number[]) || [];
-        next[currentQuestionIndex] = current.includes(index)
-          ? current.filter((i) => i !== index)
-          : [...current, index];
-      }
-      return next;
-    });
-  };
-
-  const handleFillInput = (val: string) => {
-    if (showResults[currentQuestionIndex]) return;
-    setSelectedAnswers((prev) => {
-      const next = [...prev];
-      next[currentQuestionIndex] = val;
-      return next;
-    });
-  };
-
-  const handleSubmitAnswer = () => {
-    if (selectedAnswers[currentQuestionIndex] !== null) {
-      setShowResults((prev) => {
-        const next = [...prev];
-        next[currentQuestionIndex] = true;
-        return next;
-      });
-    }
-  };
-
-  const handleResetQuestion = () => {
-    setSelectedAnswers((prev) => {
-      const next = [...prev];
-      next[currentQuestionIndex] = null;
-      return next;
-    });
-    setShowResults((prev) => {
-      const next = [...prev];
-      next[currentQuestionIndex] = false;
-      return next;
-    });
-  };
-
-  // const handleNewRandomQuiz = () => router.refresh();
   const handleBackToCourse = () => router.push(`/course/${course.id}`);
 
-  /** ---------------- 导航 ---------------- */
-  const handleQuestionSelect = (index: number) =>
-    setCurrentQuestionIndex(index);
-  const handlePrevQuestion = () =>
-    currentQuestionIndex > 0 && setCurrentQuestionIndex((i) => i - 1);
-  const handleNextQuestion = () =>
-    currentQuestionIndex < totalQuestions - 1 &&
-    setCurrentQuestionIndex((i) => i + 1);
-
-  /** ---------------- 无题目时 ---------------- */
-  if (totalQuestions === 0) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <div className="container mx-auto px-4 py-16 text-center">
-          <div className="text-5xl mb-4">📝</div>
-          <h3 className="text-lg font-medium mb-2">本课程暂无题目</h3>
-          <p className="text-sm text-muted-foreground mb-6">
-            当前课程还没有添加任何练习题
-          </p>
-          <Button
-            variant="outline"
-            onClick={handleBackToCourse}
-            className="gap-2"
-          >
-            <Home className="h-4 w-4" /> 返回课程
-          </Button>
-        </div>
-      </div>
-    );
-  }
+  const hasQuestions = totalQuestions > 0;
 
   /** ---------------- 页面 ---------------- */
   return (
@@ -198,28 +108,32 @@ export function RandomQuizClient({ params }: RandomQuizPageProps) {
 
       {/* 主体 */}
       <main className="container mx-auto max-w-3xl px-4 py-6">
-        <QuizCard
-          currentQuestion={
-            currentQuestion as ChoiceQuestion | FillQuestion | null
-          }
-          currentIndex={currentQuestionIndex}
-          totalQuestions={totalQuestions}
-          completedQuestions={completedQuestions}
-          correctAnswers={correctAnswers}
-          selectedAnswer={selectedAnswers[currentQuestionIndex]}
-          showResult={showResults[currentQuestionIndex]}
-          onChoiceSelect={handleChoiceSelect}
-          onFillInput={handleFillInput}
-          onSubmit={handleSubmitAnswer}
-          onReset={handleResetQuestion}
-          onPrev={handlePrevQuestion}
-          onNext={handleNextQuestion}
-          onQuestionSelect={handleQuestionSelect}
-          allQuestions={randomQuestions}
-          allSelectedAnswers={selectedAnswers}
-          allShowResults={showResults}
-          courseId={courseId}
-        />
+        {hasQuestions ? (
+          <QuizCard
+            currentQuestion={
+              currentQuestion as ChoiceQuestion | FillQuestion | null
+            }
+            currentIndex={currentQuestionIndex}
+            totalQuestions={totalQuestions}
+            completedQuestions={completedQuestions}
+            correctAnswers={correctAnswers}
+            selectedAnswer={selectedAnswers[currentQuestionIndex]}
+            showResult={showResults[currentQuestionIndex]}
+            onChoiceSelect={handleChoiceSelect}
+            onFillInput={handleFillInput}
+            onSubmit={handleSubmitAnswer}
+            onReset={handleResetQuestion}
+            onPrev={handlePrevQuestion}
+            onNext={handleNextQuestion}
+            onQuestionSelect={handleQuestionSelect}
+            allQuestions={randomQuestions}
+            allSelectedAnswers={selectedAnswers}
+            allShowResults={showResults}
+            courseId={courseId}
+          />
+        ) : (
+          <EmptyQuizState courseId={courseId} />
+        )}
       </main>
     </div>
   );

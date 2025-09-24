@@ -149,15 +149,12 @@ export function ResultView({
 }
 
 // Empty state component
-export const EmptyChapterState = ({ courseId }: { courseId: string }) => (
+export const EmptyQuizState = ({ courseId }: { courseId: string }) => (
   <div className="text-center py-12">
     <div className="text-4xl mb-4">📝</div>
     <h3 className="text-lg font-medium text-muted-foreground mb-2">
-      本章节暂无题目
+      暂无题目
     </h3>
-    <p className="text-sm text-muted-foreground mb-4">
-      当前章节还没有添加任何练习题
-    </p>
     <Link href={`/course/${courseId}`}>
       <Button variant="outline">
         <ArrowLeft className="h-4 w-4 mr-2" />
