@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { notFound, useRouter } from "next/navigation";
 import { Home, Shuffle } from "lucide-react";
 
@@ -10,23 +10,39 @@ import { QuizCard } from "@/components/QuizCard";
 
 import { courses } from "@/lib/data";
 import { ChoiceQuestion, FillQuestion, Question } from "@/lib/types";
-import { isAnswerCorrect } from "@/lib/utils";
-
-export interface RandomQuizClientProps {
-  params: { courseId: string };
-  randomQuestions: Question[];
-}
+import { getRandomQuestions, isAnswerCorrect } from "@/lib/utils";
+import { RandomQuizPageProps } from "./page";
 
 /** ---------------- 随机刷题页面 ---------------- */
-export function RandomQuizClient({
-  params,
-  randomQuestions,
-}: RandomQuizClientProps) {
+export function RandomQuizClient({ params }: RandomQuizPageProps) {
   const { courseId } = params;
   const router = useRouter();
-
   const course = courses.find((c) => c.id === courseId);
   if (!course) notFound();
+
+  const allQuestions = useMemo(
+    () => course?.chapters.flatMap(ch => ch.questions) || [],
+    [course]
+  );
+  const [randomQuestions, setRandomQuestions] = useState<Question[]>([]);
+  // 初始化或刷新题目
+  const generateRandomQuestions = useCallback(() => {
+    return getRandomQuestions(allQuestions);
+  }, [allQuestions]);
+
+  // 初始化题目
+  useEffect(() => {
+    setRandomQuestions(generateRandomQuestions());
+  }, [generateRandomQuestions]);
+
+  // 换一批题目
+  const handleNewRandomQuiz = () => {
+    setRandomQuestions(generateRandomQuestions());
+    // 重置其他状态
+    setCurrentQuestionIndex(0);
+    setSelectedAnswers(new Array(10).fill(null));
+    setShowResults(new Array(10).fill(false));
+  };
 
   /** ---------------- 状态管理 ---------------- */
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -108,7 +124,7 @@ export function RandomQuizClient({
     });
   };
 
-  const handleNewRandomQuiz = () => router.refresh();
+  // const handleNewRandomQuiz = () => router.refresh();
   const handleBackToCourse = () => router.push(`/course/${course.id}`);
 
   /** ---------------- 导航 ---------------- */
@@ -152,11 +168,14 @@ export function RandomQuizClient({
           <div className="flex items-center justify-between w-full">
             {/* 左边：课程信息 */}
             <div className="flex items-center gap-3">
-              <div className="text-3xl">{course.icon}</div>
-              <div>
-                <h1 className="text-2xl font-bold">
-                  {course.title} - 随机刷题
-                </h1>
+              <div
+                className="text-3xl cursor-pointer"
+                onClick={handleBackToCourse}
+              >
+                {course.icon}
+              </div>
+              <div className="hidden sm:block">
+                <h1 className="text-xl font-bold">{course.title} - 随机刷题</h1>
                 <p className="text-sm text-muted-foreground">
                   随机抽取 10 道题目进行练习
                 </p>
@@ -172,13 +191,6 @@ export function RandomQuizClient({
               className="gap-2"
             >
               <Shuffle className="h-4 w-4" /> 换一批
-            </Button>
-            <Button
-              variant="outline"
-              onClick={handleBackToCourse}
-              className="gap-2"
-            >
-              <Home className="h-4 w-4" /> 返回课程
             </Button>
           </div>
         }

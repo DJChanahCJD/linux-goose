@@ -42,22 +42,24 @@ export default async function CoursePage({ params }: CoursePageProps) {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <div className="container mx-auto px-4 py-6 mb-8">
-          <div className="flex items-center gap-3">
-            <div className="text-4xl">{course.icon}</div>
-            <div>
-              <h1 className="text-3xl font-bold text-balance">
-                {course.title}
-              </h1>
-              <p className="text-muted-foreground text-pretty">{course.desc}</p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="text-4xl">{course.icon}</div>
+              <div>
+                <h1 className="text-3xl font-bold text-balance">
+                  {course.title}
+                </h1>
+                <p className="text-muted-foreground text-pretty">{course.desc}</p>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-wrap gap-4">
-            <Link href={getRandomQuizUrl(courseId)}>
-              <Button size="lg" className="gap-2">
-                <Shuffle className="h-5 w-5" />
-                测试一下
-              </Button>
-            </Link>
+            <div className="flex flex-wrap gap-4">
+              <Link href={getRandomQuizUrl(courseId)}>
+                <Button size="lg" className="gap-2">
+                  <Shuffle className="h-5 w-5" />
+                  测试一下
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
 

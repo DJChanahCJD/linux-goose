@@ -79,25 +79,60 @@ export function getRandomQuizUrl(courseId: string): string {
   return `/course/${courseId}/random`;
 }
 
+
 /**
- * 从课程中随机选择指定数量的题目
- * @param course 课程对象
- * @param count 要选择的题目数量，默认为10
- * @returns 随机选择的题目数组
+ * 从给定的题目源中随机获取指定数量的题目，并打乱选择题的选项顺序
+ * @param source 题目源，可以是题目数组或课程对象
+ * @param count 需要获取的题目数量，默认为 5
+ * @returns 随机选取并处理后的题目数组
  */
-export function getRandomQuestionsFromCourse(
-  course: Course,
-  count: number =2
+export function getRandomQuestions(
+  source: Question[] | Course,
+  count: number = 5
 ): Question[] {
-  // 收集所有章节的所有题目
-  const allQuestions = course.chapters.flatMap(chapter => chapter.questions);
-  
-  // 如果题目数量不足，返回所有题目
-  if (allQuestions.length <= count) {
-    return allQuestions;
+  const allQuestions = Array.isArray(source) 
+    ? source 
+    : source.chapters.flatMap(ch => ch.questions);
+
+  return shuffleArray(allQuestions)
+    .slice(0, count)
+    .map(shuffleChoiceOptions);
+}
+
+/**
+ * 打乱选择题的选项顺序（如果是选择题）
+ * @param question 题目
+ * @returns 处理后的题目
+ */
+function shuffleChoiceOptions(question: Question): Question {
+  if (question.type !== QuestionTypeEnum.CHOICE) {
+    return question;
   }
 
-  // 随机选择指定数量的题目
-  const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
+  const choiceQuestion = question as ChoiceQuestion;
+
+  // 生成选项的随机排列
+  const originalIndices = choiceQuestion.choices.map((_, index) => index);
+  const shuffledIndices = [...originalIndices].sort(() => Math.random() - 0.5);
+
+  // 重新映射选项和答案
+  const shuffledChoices = shuffledIndices.map((i) => choiceQuestion.choices[i]);
+  const shuffledAnswers = choiceQuestion.answers.map((ans) =>
+    shuffledIndices.indexOf(ans)
+  );
+
+  return {
+    ...choiceQuestion,
+    choices: shuffledChoices,
+    answers: shuffledAnswers,
+  };
+}
+
+function shuffleArray<T>(array: T[]): T[] {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
 }

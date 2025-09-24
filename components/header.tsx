@@ -13,7 +13,7 @@ export function Header({ leftSlot, rightSlot }: HeaderProps) {
       <div className={"container mx-auto p-2"}>
         <div className="flex items-center justify-between gap-3">
           {/* 网站Logo和标题 */}
-          <div className="flex items-center">
+          <div className="flex items-center px-2">
             {!leftSlot ? (
               <Link href="/" className="text-2xl gap-3">
                 🐧
