@@ -14,5 +14,3 @@ export const computerOrganization : Course = {
     icon: "💻",
     chapters: allChapters
 }
-
-export const allQuestions = allChapters.flatMap(chapter => chapter.questions)

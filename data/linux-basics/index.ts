@@ -1,10 +1,14 @@
 import { Course } from "@/lib/types"
 import { chapter as fileSystemChapter } from "./file-system"
 import { chapter as commandChapter } from "./command"
+import { chapter as vimChapter } from "./vim"
+import { chapter as shellChapter } from "./shell"
 
 const allChapters = [
   fileSystemChapter,
   commandChapter,
+  vimChapter,
+  shellChapter,
 ];
 
 export const linuxBasics : Course = {
@@ -14,5 +18,3 @@ export const linuxBasics : Course = {
     icon: "🏠",
     chapters: allChapters
 }
-
-export const allQuestions = allChapters.flatMap(chapter => chapter.questions)
