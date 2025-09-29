@@ -52,3 +52,12 @@ export interface Course {
   icon: string
   chapters: Chapter[]
 }
+
+// 学科
+export interface Subject {
+  id: string
+  title: string
+  desc: string    // 简短描述
+  icon: string
+  courses: Course[]
+}
