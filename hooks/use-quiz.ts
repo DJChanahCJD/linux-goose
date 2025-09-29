@@ -93,6 +93,13 @@ export function useQuiz(questions: Question[]) {
     });
   };
 
+  // 重置所有题目
+  const handleResetAllQuestions = () => {
+    setSelectedAnswers(new Array(questions.length).fill(null));
+    setShowResults(new Array(questions.length).fill(false));
+    setCurrentQuestionIndex(0);
+  };
+
   /** ---------------- 导航 ---------------- */
   const handlePrevQuestion = () => {
     setCurrentQuestionIndex((i) => Math.max(0, i - 1));
@@ -123,6 +130,7 @@ export function useQuiz(questions: Question[]) {
     handleFillInput,
     handleSubmitAnswer,
     handleResetQuestion,
+    handleResetAllQuestions,
     handlePrevQuestion,
     handleNextQuestion,
     handleQuestionSelect,

@@ -45,6 +45,7 @@ export function RandomQuizClient({ params }: RandomQuizPageProps) {
     handleFillInput,
     handleSubmitAnswer,
     handleResetQuestion,
+    handleResetAllQuestions,
     handlePrevQuestion,
     handleNextQuestion,
     handleQuestionSelect,
@@ -58,11 +59,11 @@ export function RandomQuizClient({ params }: RandomQuizPageProps) {
 
   // 换一批题目
   const handleNewRandomQuiz = () => {
+    // router.refresh();
     const newRandomQuestions = generateRandomQuestions();
     setRandomQuestions(newRandomQuestions);
     // 重置所有状态到初始值
-    handleQuestionSelect(0);
-    handleResetQuestion();
+    handleResetAllQuestions();
   };
 
 
