@@ -4,13 +4,17 @@ import { chapter as planetsChapter } from "./planets";
 import { chapter as eclipsesChapter } from "./eclipses";
 import { chapter as earthStructureChapter } from "./earth-structure";
 import { chapter as plateTectonicsChapter } from "./plate-tectonics";
+import { chapter as earthAtmosphereChapter } from "./earth-atmosphere";
+import { chapter as earthMovementClimateChapter } from "./earth-movement-climate";
 
 const allChapters = [
   sunChapter,
   planetsChapter,
   eclipsesChapter,
   earthStructureChapter,
-  plateTectonicsChapter
+  plateTectonicsChapter,
+  earthAtmosphereChapter,
+  earthMovementClimateChapter
 ];
 
 export const geography : Course = {

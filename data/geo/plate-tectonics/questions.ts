@@ -2,7 +2,7 @@ import { Question, QuestionTypeEnum } from "@/lib/types";
 
 /**
  * 板块运动章节的题目列表
- * 包含板块构造、地震相关知识和地质现象的知识点
+ * 包含板块构造、地震相关知识、地质现象和应急措施的知识点
  */
 export const questions: Question[] = [
   {
@@ -60,5 +60,89 @@ export const questions: Question[] = [
     answers: [0],
     type: QuestionTypeEnum.CHOICE,
     hint: "构造地震是由于地壳运动引起的地震，占地震总数的90%以上。",
+  },
+  {
+    content: "下列哪种板块运动类型会形成山脉？",
+    choices: ["碰撞（汇聚）", "张裂（分离）", "平移（转换）", "以上都不对"],
+    answers: [0],
+    type: QuestionTypeEnum.CHOICE,
+    hint: "两个板块相互碰撞挤压，会形成山脉、海沟等。例如，喜马拉雅山脉就是板块碰撞形成的。",
+  },
+  {
+    content: "东非大裂谷主要是由哪种板块运动形成的？",
+    choices: ["碰撞（汇聚）", "张裂（分离）", "平移（转换）", "以上都不对"],
+    answers: [1],
+    type: QuestionTypeEnum.CHOICE,
+    hint: "东非大裂谷是由于非洲板块内部张裂形成的。",
+  },
+  {
+    content: "美国西海岸的圣安德烈亚斯断层主要是由哪种板块运动形成的？",
+    choices: ["碰撞（汇聚）", "张裂（分离）", "平移（转换）", "以上都不对"],
+    answers: [2],
+    type: QuestionTypeEnum.CHOICE,
+    hint: "圣安德烈亚斯断层是太平洋板块和美洲板块相互平移形成的转换断层。",
+  },
+  {
+    content: "以下哪种地震波是造成建筑物破坏的主要原因？",
+    choices: ["纵波（P波）", "横波（S波）", "表面波（L波）", "以上都是"],
+    answers: [2],
+    type: QuestionTypeEnum.CHOICE,
+    hint: "表面波（L波）沿地球表面传播，速度最慢，但振幅最大，是造成建筑物破坏的主要原因。",
+  },
+  {
+    content: "地震序列中，最大的地震被称为？",
+    choices: ["前震", "主震", "余震", "微震"],
+    answers: [1],
+    type: QuestionTypeEnum.CHOICE,
+    hint: "地震序列通常包括前震（主震之前的小地震）、主震（最大的地震）和余震（主震之后的小地震）。",
+  },
+  {
+    content: "震源深度小于多少公里的地震被称为浅源地震？",
+    choices: ["30公里", "60公里", "100公里", "300公里"],
+    answers: [1],
+    type: QuestionTypeEnum.CHOICE,
+    hint: "浅源地震的震源深度小于60公里，约占全球地震总数的70%，破坏力最大。",
+  },
+  {
+    content: "地震预警的原理是基于什么？",
+    choices: ["预测地震的发生时间", "预测地震的震级", "利用地震波和电磁波传播速度的差异", "以上都不对"],
+    answers: [2],
+    type: QuestionTypeEnum.CHOICE,
+    hint: "地震预警是利用地震波传播速度慢于电磁波传播速度的特点，抢在地震波到达之前发出警报。",
+  },
+  {
+    content: "地震发生时，在室内应该怎么做？",
+    choices: ["立即跳楼逃生", "躲在桌子、床等坚固家具下面", "躲在窗户旁边", "乘坐电梯逃离"],
+    answers: [1],
+    type: QuestionTypeEnum.CHOICE,
+    hint: "地震发生时，在室内应迅速躲在桌子、床等坚固家具下面，或躲在墙角，用坐垫、枕头等保护头部。",
+  },
+  {
+    content: "2004年印度洋地震引发了巨大的海啸，这次地震的震级约为？",
+    choices: ["7.8级", "8.5级", "9.1级", "9.5级"],
+    answers: [2],
+    type: QuestionTypeEnum.CHOICE,
+    hint: "2004年印度洋地震的震级约为9.1级，引发了巨大的海啸，造成约22.7万人死亡。",
+  },
+  {
+    content: "地球上每年大约发生多少万次地震？",
+    choices: ["10万次", "100万次", "500万次", "1000万次"],
+    answers: [2],
+    type: QuestionTypeEnum.CHOICE,
+    hint: "地球上每年大约发生500万次地震，但其中只有约1%能被人感觉到。",
+  },
+  {
+    content: "下列哪种板块面积最大？",
+    choices: ["太平洋板块", "欧亚板块", "非洲板块", "美洲板块"],
+    answers: [0],
+    type: QuestionTypeEnum.CHOICE,
+    hint: "太平洋板块是以海洋为主的板块，是面积最大的板块。",
+  },
+  {
+    content: "下列哪种地震是由人类活动诱发的？",
+    choices: ["构造地震", "诱发地震", "人工地震", "火山地震"],
+    answers: [1],
+    type: QuestionTypeEnum.CHOICE,
+    hint: "诱发地震是由人类活动诱发的地震，如水库蓄水、矿山开采、石油钻探等。",
   },
 ];

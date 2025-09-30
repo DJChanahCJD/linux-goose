@@ -53,11 +53,33 @@ export interface Course {
   chapters: Chapter[]
 }
 
-// 学科
-export interface Subject {
-  id: string
-  title: string
-  desc: string    // 简短描述
-  icon: string
-  courses: Course[]
-}
+// // 学科
+// export interface Subject {
+//   id: string
+//   title: string
+//   desc: string    // 简短描述
+//   icon: string
+//   courses: Course[]
+// }
+
+// // 新增模块概念（跨学科组合）
+// export interface Module {
+//   id: string;
+//   title: string; // 如 "通识教育"、"考公必备"
+//   desc: string;
+//   icon: string;
+//   /**
+//    * 模块包含的学习单元（可跨学科自由组合）
+//    * 可以是完整课程（Course），或精选章节（Chapter）
+//    */
+//   items: Array<{
+//     type: "course" | "chapter";
+//     ref: Course | Chapter; // 实际实现时需用ID引用
+//   }>;
+// }
+
+// // 系统顶层结构
+// export interface LearningSystem {
+//   subjects: Subject[]; // 传统学科树
+//   modules: Module[];   // 跨学科模块
+// }

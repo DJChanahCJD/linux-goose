@@ -86,6 +86,7 @@ export function getRandomQuizUrl(courseId: string): string {
  * @param count 需要获取的题目数量，默认为 5
  * @returns 随机选取并处理后的题目数组
  */
+// TODO: 随机测试填写后shuffle有问题
 export function getRandomQuestions(
   source: Question[] | Course,
   count: number = 5
