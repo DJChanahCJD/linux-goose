@@ -1,4 +1,4 @@
-import { Question, QuestionTypeEnum, Level } from '@/lib/types';
+import { Question, QuestionTypeEnum, LevelEnum } from '@/lib/types';
 
 /**
  * 地球运动与气候章节的题目列表

@@ -1,5 +1,5 @@
 import { Chapter } from "@/lib/types";
-import { Level } from "@/lib/types";
+import { LevelEnum } from "@/lib/types";
 import README from './README.md'
 import { questions } from './questions'
 
@@ -11,7 +11,7 @@ export const chapter: Chapter = {
   id: "eclipses",
   title: "日食与月食",
   desc: "了解日食和月食的形成原理、类型和相关天文知识",
-  level: Level.MEDIUM,
+  level: LevelEnum.MEDIUM,
   readme: README,
   questions: questions,
 };

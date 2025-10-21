@@ -6,7 +6,7 @@ const allChapters = [
   templateChapter,
 ];
 
-export const linuxBasics : Course = {
+export const template : Course = {
     id: "template课程",
     title: "模板课程",
     desc: "",

@@ -32,13 +32,13 @@ export interface Chapter {
   id: string
   title: string
   desc: string    // 章节描述
-  level: Level
+  level: LevelEnum
   questions: Question[]
   readme: ReactNode | ((props: MDXProps) => Element); // 接受ReactNode或MDX组件函数
 }
 
 // 难度级别
-export enum Level {
+export enum LevelEnum {
   EASY = "easy",
   MEDIUM = "medium",
   HARD = "hard",

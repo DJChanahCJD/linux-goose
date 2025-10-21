@@ -4,7 +4,7 @@ import {
   ChoiceQuestion,
   Course,
   FillQuestion,
-  Level,
+  LevelEnum,
   Question,
   QuestionTypeEnum,
 } from "./types";
@@ -13,26 +13,26 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const getLevelColor = (level: Level) => {
+export const getLevelColor = (level: LevelEnum) => {
   switch (level) {
-    case Level.EASY:
+    case LevelEnum.EASY:
       return "bg-success text-success-foreground";
-    case Level.MEDIUM:
+    case LevelEnum.MEDIUM:
       return "bg-warning text-warning-foreground";
-    case Level.HARD:
+    case LevelEnum.HARD:
       return "bg-destructive text-destructive-foreground";
     default:
       return "bg-secondary text-secondary-foreground";
   }
 };
 
-export const getLevelText = (level: Level) => {
+export const getLevelText = (level: LevelEnum) => {
   switch (level) {
-    case Level.EASY:
+    case LevelEnum.EASY:
       return "简单";
-    case Level.MEDIUM:
+    case LevelEnum.MEDIUM:
       return "中等";
-    case Level.HARD:
+    case LevelEnum.HARD:
       return "困难";
     default:
       return level;

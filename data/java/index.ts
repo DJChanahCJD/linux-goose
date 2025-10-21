@@ -1,8 +1,10 @@
 import { Course } from "@/lib/types"
 import { chapter as javaFeaturesChapter } from "./java-features";
+import { chapter as dataTypesChapter } from "./data-types";
 
 const allChapters = [
   javaFeaturesChapter,
+  dataTypesChapter,
 ];
 
 export const javaBasics : Course = {

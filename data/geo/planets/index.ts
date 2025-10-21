@@ -1,5 +1,5 @@
 import { Chapter } from "@/lib/types";
-import { Level } from "@/lib/types";
+import { LevelEnum } from "@/lib/types";
 import README from './README.md'
 import { questions } from './questions'
 
@@ -11,7 +11,7 @@ export const chapter: Chapter = {
   id: "planets",
   title: "太阳系行星",
   desc: "了解太阳系八大行星的分类、特征和独特性质",
-  level: Level.EASY,
+  level: LevelEnum.EASY,
   readme: README,
   questions: questions,
 };

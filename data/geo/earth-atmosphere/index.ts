@@ -1,4 +1,4 @@
-import { Level, Chapter } from '@/lib/types';
+import { LevelEnum, Chapter } from '@/lib/types';
 import readme from './README.md';
 import { questions } from './questions';
 
@@ -10,7 +10,7 @@ export const chapter: Chapter = {
   id: 'earth-atmosphere',
   title: '地球与大气',
   desc: '学习地球的大气结构和系统，包括大气分层、地球坐标系统等',
-  level: Level.EASY,
+  level: LevelEnum.EASY,
   readme: readme,
   questions,
 };
