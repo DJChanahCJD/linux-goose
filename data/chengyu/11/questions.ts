@@ -1,6 +1,6 @@
-import { QuestionTypeEnum, ChoiceQuestion } from "../../../lib/types";
+import { Question, QuestionTypeEnum } from "@/lib/types";
 
-export const questions: ChoiceQuestion[] = [
+export const questions: Question[] = [
   {
     content: "\"条分缕析\"这个成语中，\"缕\"的意思是什么？",
     type: QuestionTypeEnum.CHOICE,

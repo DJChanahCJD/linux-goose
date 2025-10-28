@@ -13,6 +13,12 @@ import { chapter as chapter11 } from "./11";
 import { chapter as chapter12 } from "./12";
 import { chapter as chapter13 } from "./13";
 import { chapter as chapter14 } from "./14";
+import { chapter as chapter15 } from "./15";
+import { chapter as chapter16 } from "./16";
+import { chapter as chapter17 } from "./17";
+import { chapter as chapter18 } from "./18";
+import { chapter as chapter19 } from "./19";
+import { chapter as chapter20 } from "./20";
 
 
 export const chengyu : Course = {
@@ -35,5 +41,11 @@ export const chengyu : Course = {
         chapter12,
         chapter13,
         chapter14,
+        chapter15,
+        chapter16,
+        chapter17,
+        chapter18,
+        chapter19,
+        chapter20,
     ]
 }
